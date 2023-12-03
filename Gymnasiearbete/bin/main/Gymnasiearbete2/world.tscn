@@ -1,0 +1,74 @@
+[gd_scene load_steps=7 format=3 uid="uid://d04p0drx0jnhw"]
+
+[ext_resource type="Script" path="res://Player.gd" id="1_1ow27"]
+[ext_resource type="Texture2D" uid="uid://b1rkbqar63e4v" path="res://Fågel.png" id="2_ktmto"]
+[ext_resource type="PackedScene" uid="uid://d0jbesnu8yxg8" path="res://wallnode.tscn" id="3_7tnm7"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_6h5ee"]
+radius = 86.0
+height = 296.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tmupn"]
+radius = 92.0
+height = 320.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oww3h"]
+size = Vector2(170, 170)
+
+[node name="World" type="Node2D"]
+
+[node name="PlayerNode" type="Node2D" parent="."]
+
+[node name="Player" type="CharacterBody2D" parent="PlayerNode"]
+scale = Vector2(0.5, 0.5)
+script = ExtResource("1_1ow27")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerNode/Player"]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_6h5ee")
+
+[node name="Sprite2D" type="Sprite2D" parent="PlayerNode/Player"]
+texture = ExtResource("2_ktmto")
+
+[node name="Detect" type="Area2D" parent="PlayerNode/Player"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerNode/Player/Detect"]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_tmupn")
+
+[node name="Resetter" type="Area2D" parent="PlayerNode/Player"]
+position = Vector2(-896, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerNode/Player/Resetter"]
+position = Vector2(2.08165e-12, 2.08165e-12)
+scale = Vector2(1, 15)
+shape = SubResource("RectangleShape2D_oww3h")
+
+[node name="Wallnode" parent="PlayerNode" instance=ExtResource("3_7tnm7")]
+position = Vector2(1032, -928)
+metadata/_edit_group_ = true
+
+[node name="Wallnode2" parent="PlayerNode" instance=ExtResource("3_7tnm7")]
+position = Vector2(1704, -384)
+metadata/_edit_group_ = true
+
+[node name="Wallnode3" parent="PlayerNode" instance=ExtResource("3_7tnm7")]
+position = Vector2(2480, -648)
+metadata/_edit_group_ = true
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(300, 2.08165e-12)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+follow_viewport_enabled = true
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer"]
+offset_left = 216.0
+offset_top = -560.0
+offset_right = 384.0
+offset_bottom = -448.0
+theme_override_font_sizes/normal_font_size = 20
+
+[connection signal="area_entered" from="PlayerNode/Player/Detect" to="PlayerNode/Player" method="_on_detect_area_entered"]
+[connection signal="body_entered" from="PlayerNode/Player/Detect" to="PlayerNode/Player" method="_on_detect_body_entered"]
+[connection signal="body_entered" from="PlayerNode/Player/Resetter" to="PlayerNode/Player" method="_on_resetter_body_entered"]
