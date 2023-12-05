@@ -151,8 +151,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 			System.out.println("collision");
 			running = false;
 			over = true;
-		} else if (b.xPos + 5 >= p2.xPos - p2.width - 60 && b.xPos + 5 <= p2.xPos
-				&& (b.yPos + 5 <= p2.yPos - p2.gap || b.yPos + 5 + 35 > p2.yPos)) {
+		} else if (b.xPos + 5 >= p3.xPos - p3.width - 60 && b.xPos + 5 <= p3.xPos
+				&& (b.yPos + 5 <= p3.yPos - p3.gap || b.yPos + 5 + 35 > p3.yPos)) {
 			System.out.println("collision");
 			running = false;
 			over = true;
